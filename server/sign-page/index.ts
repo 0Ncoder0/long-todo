@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import bodyParser from "body-parser";
@@ -28,6 +28,29 @@ let verificationCodes: VerificationCode[] = [];
 
 // Middleware
 app.use(bodyParser.json());
+
+// 中间件函数，记录请求信息
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const redText = (text: string) => `\x1b[31m${text}\x1b[0m`;
+  console.log(
+    `[${new Date().toISOString()}] Request received: ${req.method} ${redText(
+      req.url
+    )}`
+  );
+  console.log(`Request body: ${redText(JSON.stringify(req.body))}`);
+  next();
+});
+
+// 中间件函数，记录响应信息
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const originalSend = res.send;
+  const redText = (text: string) => `\x1b[31m${text}\x1b[0m`;
+  res.send = (data: unknown) => {
+    console.log(`Response body: ${redText(JSON.stringify(data))}`);
+    return originalSend.call(res, data);
+  };
+  next();
+});
 
 // Routes
 app.post("/login", (req: Request, res: Response) => {
