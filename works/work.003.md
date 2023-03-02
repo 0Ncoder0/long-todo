@@ -39,8 +39,10 @@ type SnakeBody = [x: number, y: number][];
 /** 同步地图 */
 type SyncMap = {
   key: "sync-map";
-  snakes: SnakeBody[];
-  food: [x: number, y: number][];
+  data: {
+    snakes: SnakeBody[];
+    food: [x: number, y: number][];
+  };
 };
 /** 游戏结束 */
 type GameOver = {
