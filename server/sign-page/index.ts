@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import bodyParser from "body-parser";
 import { v4 as uuidv4 } from "uuid";
+import cors from 'cors'
 
 interface User {
   id: string;
@@ -28,6 +29,8 @@ let verificationCodes: VerificationCode[] = [];
 
 // Middleware
 app.use(bodyParser.json());
+
+app.use(cors());
 
 // 中间件函数，记录请求信息
 app.use((req: Request, res: Response, next: NextFunction) => {
