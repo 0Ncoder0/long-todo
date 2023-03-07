@@ -56,6 +56,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Routes
+
+app.get("/user-list", (req: Request, res: Response) => {
+  res.status(200).json({
+    code: "Success",
+    data: users,
+  });
+});
+
 app.post("/login", (req: Request, res: Response) => {
   const { email, password } = req.body;
   const user = users.find((u) => u.email === email && u.password === password);
