@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>已注册的用户列表</title>
+  <style>
+    td,
+    th,
+    table {
+      border: 1px solid gray;
+    }
+
+    td,
+    th {
+      padding: 8px 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <table id="table">
+    <tr>
+      <th>Index</td>
+      <th>ID</th>
+      <th>Email</th>
+    </tr>
+  </table>
+  <script>
+    fetch("http://server.capital-lb.top:3000/user-list").then(
+      async (response) => {
+        /**
+         * @type {code:string, data:Array<{id:string,email:string}>}
+         */
+        const result = await response.json();
+        const table = document.getElementById("table");
+
+        result.data.forEach((user, index) => {
+          const tdIndex = document.createElement("td");
+          const tdId = document.createElement("td");
+          const tdEmail = document.createElement("td");
+          const tr = document.createElement("tr");
+
+          tdIndex.innerText = index + 1 + '';
+          tdId.innerText = user.id;
+          tdEmail.innerText = user.email;
+
+          tr.append(tdIndex, tdId, tdEmail);
+          table.append(tr);
+        });
+      }
+    );
+  </script>
+</body>
+
+</html>
