@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户列表</title>
+  </head>
+  <body>
+    <h1>用户列表</h1>
+    <ul id="user-list">
+      <li>张三</li>
+      <li>李四</li>
+      <li>王五</li>
+    </ul>
+    <input type="text" id="new-user" placeholder="输入新用户名称" />
+    <button id="add-user">添加用户</button>
+    <button id="remove-user">删除最后一个用户</button>
+    <script>
+      // 获取元素
+      const userList = document.getElementById("user-list");
+      const newUserInput = document.getElementById("new-user");
+      const addUserButton = document.getElementById("add-user");
+      const removeUserButton = document.getElementById("remove-user");
+
+      // 添加用户
+      addUserButton.addEventListener("click", function () {
+        // 创建新用户元素
+        const newUser = document.createElement("li");
+        newUser.textContent = newUserInput.value;
+
+        // 将新用户元素添加到用户列表
+        userList.appendChild(newUser);
+
+        // 清空输入框
+        newUserInput.value = "";
+      });
+
+      // 删除最后一个用户
+      removeUserButton.addEventListener("click", function () {
+        // 获取最后一个用户元素
+        const lastUser = userList.lastElementChild;
+
+        // 如果存在最后一个用户元素，则删除
+        if (lastUser) {
+          userList.removeChild(lastUser);
+        }
+      });
+    </script>
+  </body>
+</html>
